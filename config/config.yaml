@@ -5,9 +5,9 @@ github:
   endpoints:
     - repositories
     - contributors
-    - issues
-    - pull_requests
     - commits
+    - pull_requests
+    - issues
     - languages
 
   per_page: 100
@@ -20,6 +20,8 @@ aws:
 
 storage:
   bronze_bucket: github-bronze
+  silver_bucket: github-silver
+  gold_bucket: github-gold
 
 logging:
   level: INFO
