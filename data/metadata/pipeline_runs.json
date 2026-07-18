@@ -1,0 +1,34 @@
+[
+    {
+        "run_time": "2026-07-18T18:56:47.950237",
+        "organization": "tensorflow",
+        "endpoint": "repositories",
+        "record_count": 107,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=repositories\\year=2026\\month=07\\day=18\\repositories.json"
+    },
+    {
+        "run_time": "2026-07-18T19:35:50.134312",
+        "organization": "tensorflow",
+        "endpoint": "repositories",
+        "record_count": 107,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=repositories\\year=2026\\month=07\\day=18\\repositories.json"
+    },
+    {
+        "run_time": "2026-07-18T19:42:58.486513",
+        "organization": "tensorflow",
+        "endpoint": "repositories",
+        "record_count": 0,
+        "status": "FAILED",
+        "file_path": ""
+    },
+    {
+        "run_time": "2026-07-18T19:46:53.634461",
+        "organization": "tensorflow",
+        "endpoint": "repositories",
+        "record_count": 107,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=repositories\\year=2026\\month=07\\day=18\\repositories.json"
+    }
+]
