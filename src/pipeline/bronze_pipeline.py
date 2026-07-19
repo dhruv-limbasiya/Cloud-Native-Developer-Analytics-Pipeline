@@ -16,6 +16,8 @@ class BronzePipeline:
         self.writer = BronzeWriter()
 
         self.metadata = MetadataWriter()
+        
+        self.extractors = ExtractorFactory.get_extractors(self.client)
 
         self.repository_pipeline = RepositoryPipeline(
             client=self.client,
@@ -31,9 +33,7 @@ class BronzePipeline:
         for endpoint in organization_endpoints:
 
             print(f"\nProcessing {endpoint}")
-
-            # Only organization-level endpoints are handled here.
-            # Repository-level endpoints are processed inside RepositoryPipeline.
+            
             if endpoint != "repositories":
 
                 print(f"Skipping {endpoint} (Repository-level endpoint)")

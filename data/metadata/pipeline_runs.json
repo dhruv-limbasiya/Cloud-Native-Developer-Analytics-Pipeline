@@ -54,5 +54,597 @@
         "record_count": 107,
         "status": "SUCCESS",
         "file_path": "data\\bronze\\organization=tensorflow\\endpoint=repositories\\year=2026\\month=07\\day=18\\repositories.json"
+    },
+    {
+        "run_time": "2026-07-19T11:22:37.905365",
+        "organization": "tensorflow",
+        "endpoint": "repositories",
+        "record_count": 107,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=repositories\\year=2026\\month=07\\day=19\\repositories.json"
+    },
+    {
+        "run_time": "2026-07-19T11:22:38.511489",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 26,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T17:58:28.649463",
+        "organization": "tensorflow",
+        "endpoint": "repositories",
+        "record_count": 107,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=repositories\\year=2026\\month=07\\day=19\\repositories.json"
+    },
+    {
+        "run_time": "2026-07-19T17:58:29.209392",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 26,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:02:06.675802",
+        "organization": "tensorflow",
+        "endpoint": "repositories",
+        "record_count": 107,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=repositories\\year=2026\\month=07\\day=19\\repositories.json"
+    },
+    {
+        "run_time": "2026-07-19T18:02:07.267818",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 26,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:11:10.637949",
+        "organization": "tensorflow",
+        "endpoint": "repositories",
+        "record_count": 107,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=repositories\\year=2026\\month=07\\day=19\\repositories.json"
+    },
+    {
+        "run_time": "2026-07-19T18:11:11.592757",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 26,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:12:22.116665",
+        "organization": "tensorflow",
+        "endpoint": "repositories",
+        "record_count": 107,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=repositories\\year=2026\\month=07\\day=19\\repositories.json"
+    },
+    {
+        "run_time": "2026-07-19T18:12:22.702116",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 26,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:13.102255",
+        "organization": "tensorflow",
+        "endpoint": "repositories",
+        "record_count": 107,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=repositories\\year=2026\\month=07\\day=19\\repositories.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:13.732124",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 26,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:15.325397",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:17.899246",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:21.069863",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:22.452454",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:23.083768",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 2,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\skflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:24.777350",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\skflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:26.467058",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 4,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\skflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:28.003850",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 1,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\skflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:29.430875",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 23,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\skflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:30.051154",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 6,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\serving.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:32.049154",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\serving.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:33.908938",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 98,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\serving.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:37.222645",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 64,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\serving.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:38.565829",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\serving.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:39.165592",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 4,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\rust.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:41.899301",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\rust.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:43.970950",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 69,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\rust.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:45.502335",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 6,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\rust.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:46.889719",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 45,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\rust.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:47.540223",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 10,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\models.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:49.251583",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\models.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:51.999028",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\models.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:57.805956",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\models.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:59.227463",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\models.json"
+    },
+    {
+        "run_time": "2026-07-19T18:13:59.912823",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 4,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\playground.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:01.863928",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\playground.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:05.088511",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 146,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\playground.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:07.551798",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 47,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\playground.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:08.934692",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 16,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\playground.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:09.571874",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 3,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\benchmarks.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:12.391027",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\benchmarks.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:14.504233",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 99,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\benchmarks.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:16.263568",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 9,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\benchmarks.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:17.591629",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 74,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\benchmarks.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:18.217764",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 6,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\ecosystem.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:20.229460",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 74,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\ecosystem.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:22.105063",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 72,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\ecosystem.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:23.693027",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 12,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\ecosystem.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:24.975406",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 32,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\ecosystem.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:25.580228",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 3,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\haskell.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:27.586932",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 194,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\haskell.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:29.060086",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 39,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\haskell.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:30.474356",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 2,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\haskell.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:31.843862",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 32,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\haskell.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:32.454035",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 6,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\deepmath.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:34.207288",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 105,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\deepmath.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:35.555049",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 5,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\deepmath.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:36.934295",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 2,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\deepmath.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:38.232613",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 7,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\deepmath.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:38.860235",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 1,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\embedding-projector-standalone.json"
+    },
+    {
+        "run_time": "2026-07-19T18:14:40.196031",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 21,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\embedding-projector-standalone.json"
+    },
+    {
+        "run_time": "2026-07-19T18:17:27.173101",
+        "organization": "tensorflow",
+        "endpoint": "repositories",
+        "record_count": 107,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=repositories\\year=2026\\month=07\\day=19\\repositories.json"
+    },
+    {
+        "run_time": "2026-07-19T18:17:27.803787",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 26,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:17:29.225871",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:17:31.847099",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:17:34.803408",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:17:36.185699",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\tensorflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:17:36.774527",
+        "organization": "tensorflow",
+        "endpoint": "languages",
+        "record_count": 2,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=languages\\year=2026\\month=07\\day=19\\skflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:17:38.180558",
+        "organization": "tensorflow",
+        "endpoint": "commits",
+        "record_count": 200,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=commits\\year=2026\\month=07\\day=19\\skflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:17:39.512346",
+        "organization": "tensorflow",
+        "endpoint": "issues",
+        "record_count": 4,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=issues\\year=2026\\month=07\\day=19\\skflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:17:40.803502",
+        "organization": "tensorflow",
+        "endpoint": "pull_requests",
+        "record_count": 1,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=pull_requests\\year=2026\\month=07\\day=19\\skflow.json"
+    },
+    {
+        "run_time": "2026-07-19T18:17:42.125530",
+        "organization": "tensorflow",
+        "endpoint": "contributors",
+        "record_count": 23,
+        "status": "SUCCESS",
+        "file_path": "data\\bronze\\organization=tensorflow\\endpoint=contributors\\year=2026\\month=07\\day=19\\skflow.json"
     }
 ]

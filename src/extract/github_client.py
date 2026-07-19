@@ -85,7 +85,7 @@ class GitHubClient:
             "Maximum retry attempts reached."
         )
 
-    def paginate(self, endpoint):
+    def paginate(self, endpoint, params=None, max_pages=None):
         """
         Automatically fetch all pages.
         """
@@ -95,8 +95,11 @@ class GitHubClient:
         all_data = []
 
         per_page = self.config["github"]["per_page"]
+        
+        if max_pages is None:
+            max_pages = self.config["github"]["max_pages"]
 
-        while True:
+        while page <= max_pages:
 
             self.logger.info(f"Fetching Page {page}")
 
