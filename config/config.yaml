@@ -1,27 +1,22 @@
 github:
+
   organizations:
     - tensorflow
 
-  endpoints:
+  organization_endpoints:
     - repositories
-    - contributors
-    - commits
-    - pull_requests
-    - issues
+
+  repository_endpoints:
     - languages
+    - commits
+    - issues
+    - pull_requests
+    - contributors
 
   per_page: 100
+
   max_repositories: 20
+
   request_timeout: 30
+
   retry_count: 3
-
-aws:
-  region: us-east-1
-
-storage:
-  bronze_bucket: github-bronze
-  silver_bucket: github-silver
-  gold_bucket: github-gold
-
-logging:
-  level: INFO

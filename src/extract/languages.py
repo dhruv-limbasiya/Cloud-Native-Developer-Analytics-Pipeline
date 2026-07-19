@@ -1,9 +1,6 @@
-from src.extract.github_client import GitHubClient
-
-
 class LanguagesExtractor:
 
-    def __init__(self, client: GitHubClient):
+    def __init__(self, client):
         self.client = client
 
     def extract(self, owner, repository):

@@ -13,13 +13,16 @@ def main():
 
     organization = config["github"]["organizations"][0]
 
-    endpoints = config["github"]["endpoints"]
+    organization_endpoints = config["github"]["organization_endpoints"]
+
+    repository_endpoints = config["github"]["repository_endpoints"]
 
     pipeline = BronzePipeline()
 
     pipeline.run(
         organization,
-        endpoints
+        organization_endpoints,
+        repository_endpoints
     )
 
 
