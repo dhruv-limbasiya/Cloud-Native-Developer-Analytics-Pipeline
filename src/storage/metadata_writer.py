@@ -1,6 +1,8 @@
 import json
+import os
 from pathlib import Path
 from datetime import datetime
+import logging
 
 
 class MetadataWriter:
@@ -16,17 +18,19 @@ class MetadataWriter:
 
         metadata = {
             "run_time": datetime.now().isoformat(),
-
             "organization": organization,
-
             "endpoint": endpoint,
-
             "record_count": record_count,
-
             "status": status,
-
             "file_path": str(file_path)
         }
+
+        # Running inside AWS Lambda?
+        is_lambda = "AWS_LAMBDA_FUNCTION_NAME" in os.environ
+
+        if is_lambda:
+            logging.info(f"Pipeline Metadata: {metadata}")
+            return
 
         metadata_folder = Path("data") / "metadata"
 
@@ -38,21 +42,17 @@ class MetadataWriter:
         metadata_file = metadata_folder / "pipeline_runs.json"
 
         if metadata_file.exists():
-
             with open(metadata_file, "r") as file:
-
                 try:
                     data = json.load(file)
                 except json.JSONDecodeError:
                     data = []
-
         else:
             data = []
 
         data.append(metadata)
 
         with open(metadata_file, "w") as file:
-
             json.dump(
                 data,
                 file,
