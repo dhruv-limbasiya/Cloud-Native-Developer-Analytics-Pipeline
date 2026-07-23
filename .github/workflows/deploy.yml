@@ -4,13 +4,11 @@ on:
   push:
     branches:
       - main
+      - master
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
 
     steps:
       - name: Checkout Repository
@@ -21,38 +19,41 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install Dependencies
+      - name: Validate Python Syntax
         run: |
-          python -m pip install --upgrade pip
+          python -m py_compile lambda/lambda_handler.py
 
-          mkdir build
+      - name: Create Build Directory
+        run: mkdir build
 
+      - name: Install Lambda Dependencies
+        run: |
           pip install -r lambda/requirements.txt -t build
 
-      - name: Copy Project Files
+      - name: Copy Lambda Source
         run: |
           cp lambda/lambda_handler.py build/
-
-          cp -r src build/
-          cp -r config build/
 
       - name: Create Deployment Package
         run: |
           cd build
           zip -r ../deployment.zip .
 
+      - name: Upload Deployment Package
+        uses: actions/upload-artifact@v4
+        with:
+          name: lambda-package
+          path: deployment.zip
+
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
+          aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Deploy Lambda
         run: |
           aws lambda update-function-code \
-            --function-name developer-analytics-bronze \
+            --function-name ${{ secrets.LAMBDA_FUNCTION_NAME }} \
             --zip-file fileb://deployment.zip
-
-      - name: Deployment Complete
-        run: echo "Lambda deployed successfully!"
