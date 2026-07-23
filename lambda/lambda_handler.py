@@ -44,6 +44,8 @@ def lambda_handler(event, context):
         logger.info("=" * 60)
         logger.info("Bronze Pipeline Completed")
         logger.info("=" * 60)
+        
+        print("GitHub Actions deployment successful!")
 
         return {
             "statusCode": 200,
