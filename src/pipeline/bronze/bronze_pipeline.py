@@ -50,6 +50,10 @@ class BronzePipeline:
                 
                 # Extract
                 data = extractor.extract(organization)
+
+                max_repositories = self.client.config["github"]["max_repositories"]
+
+                data = data[:max_repositories]
                 
                 # Save Bronze
                 file_path = self.writer.save(

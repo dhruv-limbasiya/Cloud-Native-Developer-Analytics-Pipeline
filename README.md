@@ -1,122 +1,93 @@
 # Cloud-Native Developer Analytics Pipeline
 
-> A cloud-native Data Engineering project that extracts GitHub organization data, processes it using a Medallion Architecture, validates data quality, and generates analytics-ready datasets for business intelligence.
+A production-inspired Data Engineering project that ingests GitHub organization data using the GitHub REST API, stores raw data in an Amazon S3 data lake following the Medallion Architecture (Bronze → Silver → Gold), performs data quality validation, generates analytical datasets, loads them into PostgreSQL, and visualizes business insights with Power BI.
 
----
-
-## Project Overview
-
-The **Cloud-Native Developer Analytics Pipeline** is an end-to-end Data Engineering project designed to demonstrate modern data engineering practices using GitHub engineering data.
-
-The pipeline automatically collects data from the GitHub REST API, stores immutable raw data, transforms it into analytics-ready datasets, validates data quality, and prepares business metrics for reporting and visualization.
-
-This project follows industry-standard architecture including:
-
-- Medallion Architecture (Bronze → Silver → Gold)
-- Configuration-driven pipeline
-- Modular ETL design
-- Data Quality Validation
-- Cloud storage integration
-- Analytics-ready datasets
-
----
-
-## Business Problem
-
-Engineering managers and technical leaders often need answers to questions such as:
-
-- Which repositories are most active?
-- Which developers contribute the most?
-- How quickly are pull requests merged?
-- How many issues remain unresolved?
-- Which programming languages are most used?
-- How is repository activity changing over time?
-
-Instead of manually collecting this information, this project automates the complete analytics pipeline.
+This project demonstrates how modern Data Engineering pipelines are designed using cloud services, modular ETL architecture, and analytics-ready data models.
 
 ---
 
 ## Architecture
 
+```text
+                     GitHub REST API
+                            │
+                            ▼
+                     AWS Lambda (Extract)
+                            │
+                            ▼
+                    Amazon S3 Bronze Layer
+                  (Raw JSON, Partitioned Data)
+                            │
+                            ▼
+                 Bronze → Silver Transformation
+                  (Cleaning & Standardization)
+                            │
+                            ▼
+                    Amazon S3 Silver Layer
+                     (Clean Parquet Dataset)
+                            │
+                 Data Quality Validation
+                            │
+                            ▼
+                  Silver → Gold Transformation
+                  (Business Analytics Tables)
+                            │
+                            ▼
+                     Amazon S3 Gold Layer
+                  (Analytics-ready Parquet)
+                            │
+                            ▼
+                       PostgreSQL Warehouse
+                            │
+                            ▼
+                    Power BI Dashboard
 ```
-                    GitHub REST API
-                           │
-                           ▼
-                    Data Extraction
-                           │
-                           ▼
-                 Bronze Layer (JSON)
-                           │
-                           ▼
-                  Bronze → Silver ETL
-                           │
-                           ▼
-                Silver Layer (Parquet)
-                           │
-                           ▼
-                Data Quality Validation
-                           │
-                           ▼
-                  Silver → Gold ETL
-                           │
-                           ▼
-                 Gold Layer (Parquet)
-                           │
-                           ▼
-                       DuckDB
-                           │
-                           ▼
-              Power BI / Apache Superset
-```
 
 ---
 
-## Medallion Architecture
+# Business Problem
 
-### Bronze Layer
+Software organizations manage hundreds of repositories and thousands of contributors across GitHub.
 
-Purpose
+Engineering managers often struggle to answer questions such as:
 
-- Store raw GitHub API responses
-- Immutable data
-- JSON format
-- Source of truth
+- Which repositories are the most active?
+- Which repositories receive the most contributions?
+- Which programming languages are most commonly used?
+- Which contributors are the most active?
+- What is the overall health of the organization?
+- How many commits, pull requests, and issues exist across repositories?
 
----
-
-### Silver Layer
-
-Purpose
-
-- Clean and standardize data
-- Remove duplicates
-- Handle null values
-- Normalize schema
-- Convert JSON to Parquet
+This project builds an automated analytics pipeline that collects GitHub data and transforms it into business-ready datasets for reporting and visualization.
 
 ---
 
-### Gold Layer
+# Tech Stack
 
-Purpose
-
-Generate business-ready datasets for analytics including:
-
-- Repository Analytics
-- Developer Analytics
-- Pull Request Metrics
-- Issue Metrics
-- Language Distribution
-- Engineering Productivity
-- Repository Growth
+| Category | Technology |
+|----------|------------|
+| Language | Python 3 |
+| Cloud | AWS Lambda, Amazon S3 |
+| API | GitHub REST API |
+| Data Lake | Amazon S3 |
+| Storage Format | JSON, Parquet |
+| Data Processing | Pandas |
+| Data Validation | Custom Data Quality Framework |
+| Database | PostgreSQL |
+| Analytics | SQL |
+| Visualization | Power BI |
+| Configuration | YAML |
+| Logging | Python Logging |
+| Version Control | Git & GitHub |
 
 ---
 
-## Project Structure
+# Project Structure
 
-```
-cloud-native-developer-analytics-pipeline/
+```text
+developer-analytics-pipeline/
 
+│
 ├── config/
 │   └── config.yaml
 │
@@ -126,188 +97,255 @@ cloud-native-developer-analytics-pipeline/
 │   ├── gold/
 │   └── metadata/
 │
-├── docs/
-│   ├── api/
-│   ├── architecture/
-│   ├── deployment/
-│   ├── diagrams/
-│   └── screenshots/
-│
 ├── logs/
 │
+├── sql/
+│
 ├── src/
-│   ├── core/
-│   ├── dq/
 │   ├── extract/
 │   ├── storage/
-│   ├── transform/
-│   └── utils/
-│
-├── tests/
+│   ├── bronze/
+│   ├── silver/
+│   ├── gold/
+│   ├── quality/
+│   ├── postgres/
 │
 ├── main.py
 ├── requirements.txt
-├── README.md
-└── .env.example
+└── README.md
 ```
 
 ---
 
-## Features
+# Pipeline Workflow
 
-- GitHub REST API Integration
-- Configuration Driven Design
-- Modular ETL Pipeline
-- Medallion Architecture
-- Data Quality Validation
-- Structured Logging
-- Incremental Data Loading
-- Local Development Support
-- Cloud Storage Ready
-- Analytics Ready Outputs
+## Step 1 — Data Extraction
 
----
+GitHub REST API is used to collect:
 
-## Technology Stack
-
-| Category | Technology |
-|----------|------------|
-| Language | Python |
-| Cloud | AWS |
-| Storage | Amazon S3 |
-| API | GitHub REST API |
-| Data Format | JSON, Parquet |
-| Data Processing | Pandas |
-| Analytics | DuckDB |
-| Dashboard | Power BI / Apache Superset |
-| Configuration | YAML |
-| Logging | Python Logging |
-| Version Control | Git & GitHub |
-
----
-
-## Pipeline Flow
-
-1. Read configuration
-2. Authenticate with GitHub
-3. Extract organization data
-4. Store raw JSON in Bronze
-5. Transform Bronze → Silver
-6. Execute Data Quality Validation
-7. Transform Silver → Gold
-8. Query Gold datasets using DuckDB
-9. Visualize metrics in BI tools
-
----
-
-## GitHub Data Sources
-
-The pipeline extracts data from:
-
-- Organization
 - Repositories
+- Languages
 - Contributors
 - Commits
-- Pull Requests
 - Issues
-- Languages
+- Pull Requests
+
+Extraction is configurable through `config.yaml`.
 
 ---
 
-## Data Quality Checks
+## Step 2 — Bronze Layer
 
-The pipeline validates:
+Raw API responses are stored in Amazon S3.
 
+Features
+
+- Raw JSON
+- Partitioned by date
+- Immutable storage
+- Metadata generation
+- Incremental ingestion
+
+Example
+
+```
+bronze/
+    organization=tensorflow/
+        endpoint=repositories/
+            year=2026/
+                month=07/
+                    day=24/
+```
+
+---
+
+## Step 3 — Silver Layer
+
+Raw JSON files are transformed into standardized datasets.
+
+Operations include
+
+- Schema normalization
+- Data cleaning
+- Null handling
+- Type conversion
+- Flattening nested JSON
+- Parquet conversion
+
+Output:
+
+- repositories.parquet
+- contributors.parquet
+- commits.parquet
+- languages.parquet
+- issues.parquet
+- pull_requests.parquet
+
+---
+
+## Step 4 — Data Quality Validation
+
+Each Silver dataset is validated before analytics generation.
+
+Validation includes
+
+- Required columns
+- Duplicate detection
+- Empty dataset validation
+- Null value checks
 - Schema consistency
-- Duplicate records
-- Missing values
-- Empty datasets
-- Data freshness
-- Business rules
 
-Failed validation prevents Gold datasets from being generated.
+Only validated datasets continue to the Gold layer.
 
 ---
 
-## Configuration
+## Step 5 — Gold Layer
 
-The pipeline is fully configuration driven.
+Business-ready analytical datasets are created.
+
+Generated tables include:
+
+- repository_metrics
+- contributor_metrics
+- language_metrics
+- repository_activity
+- organization_summary
+
+These datasets are optimized for reporting and dashboarding.
+
+---
+
+## Step 6 — PostgreSQL Warehouse
+
+Gold datasets are automatically loaded into PostgreSQL.
+
+Benefits
+
+- SQL analytics
+- BI integration
+- Reporting
+- Fast querying
+
+---
+
+## Step 7 — Power BI Dashboard
+
+Power BI connects directly to PostgreSQL to provide interactive dashboards.
+
+Example dashboards
+
+- Repository Overview
+- Repository Activity
+- Language Distribution
+- Top Contributors
+- Organization Summary
+
+---
+
+# Configuration
+
+The pipeline is fully configurable.
 
 Example:
 
 ```yaml
 github:
-  organizations:
-    - tensorflow
+  organization: tensorflow
+  max_repositories: 45
 ```
 
-Changing the organization requires no code modification.
+Changing the organization or repository limit requires only updating the configuration file.
+
+No code changes are required.
 
 ---
 
-## Logging
+# Key Features
 
-The pipeline records:
-
-- Pipeline execution
-- API requests
-- Records processed
-- Transformation status
-- Validation results
-- Errors
-- Execution duration
-
----
-
-## Future Enhancements
-
-- AWS Lambda
-- Step Functions
-- EventBridge Scheduling
-- CloudWatch Monitoring
-- SNS Notifications
-- Athena
-- Glue Catalog
-- CI/CD with GitHub Actions
-- Infrastructure as Code (CloudFormation/Terraform)
-
----
-
-## Current Project Status
-
-| Module | Status |
-|---------|--------|
-| Project Structure | Completed |
-| Configuration | Completed |
-| Documentation | Completed |
-| Logging | Completed |
-| GitHub API Client | In Progress |
-| Bronze Layer | Planned |
-| Silver Layer | Planned |
-| Gold Layer | Planned |
-| Data Quality | Planned |
-| Analytics | Planned |
-| Dashboard | Planned |
-| AWS Deployment | Planned |
-
----
-
-## Learning Objectives
-
-This project demonstrates practical experience with:
-
-- Data Engineering Fundamentals
-- ETL Pipeline Design
-- Cloud Data Storage
+- Cloud-native architecture
+- Modular ETL pipeline
 - Medallion Architecture
-- REST API Integration
-- Data Validation
-- Analytics Engineering
-- Modular Python Development
-- Production-ready Project Organization
+- Configurable pipeline
+- Incremental ingestion
+- Data quality validation
+- Metadata tracking
+- Analytics-ready datasets
+- PostgreSQL integration
+- Power BI reporting
+- Production-style project structure
 
 ---
 
-## License
+# Analytics Generated
 
-This project is developed for educational and portfolio purposes.
+The project provides insights such as:
+
+- Top repositories by stars
+- Repository activity
+- Commit statistics
+- Pull request activity
+- Issue statistics
+- Top contributors
+- Language usage
+- Organization summary
+- Repository growth metrics
+
+---
+
+# Skills Demonstrated
+
+- REST API Integration
+- Cloud Data Engineering
+- Amazon S3
+- AWS Lambda
+- ETL Pipeline Development
+- Data Lake Design
+- Medallion Architecture
+- Data Validation
+- Metadata Management
+- PostgreSQL
+- SQL Analytics
+- Power BI
+- Python
+- Pandas
+- Modular Software Design
+- Configuration-driven Development
+
+---
+
+# Future Enhancements
+
+- Apache Airflow orchestration
+- AWS Glue Data Catalog
+- Amazon Athena
+- Apache Spark
+- Apache Iceberg
+- Great Expectations
+- CI/CD using GitHub Actions
+- Infrastructure as Code (Terraform)
+
+---
+
+# Learning Outcomes
+
+This project demonstrates the complete lifecycle of a modern cloud-based analytics platform:
+
+- Data ingestion from external APIs
+- Cloud object storage
+- Layered data architecture
+- Data quality validation
+- Business transformation
+- Relational data warehousing
+- Business intelligence reporting
+
+The architecture closely follows real-world data engineering practices used in modern analytics platforms.
+
+---
+
+# Author
+
+**Dhruv Limbasiya**
+
+MCA Student | Aspiring Data Engineer
+
+---

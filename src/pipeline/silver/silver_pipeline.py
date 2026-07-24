@@ -117,9 +117,9 @@ class SilverPipeline:
             self.reporter.print_report(result)
 
             # Temporary values until we extract them from the S3 key
-            year_value = "2026"
-            month_value = "07"
-            day_value = "22"
+            year_value = bronze_files[0]["year"]
+            month_value = bronze_files[0]["month"]
+            day_value = bronze_files[0]["day"]
 
             self.reporter.save_json(
                 result=result,
