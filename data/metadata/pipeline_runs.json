@@ -8238,5 +8238,141 @@
         "record_count": 1,
         "status": "SUCCESS",
         "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=organization_summary/year=2026/month=07/day=22/organization_summary.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:31:15.880205",
+        "organization": "tensorflow",
+        "endpoint": "silver_repositories",
+        "record_count": 45,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/silver/organization=tensorflow/dataset=repositories/year=2026/month=07/day=26/repositories.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:31:28.701947",
+        "organization": "tensorflow",
+        "endpoint": "silver_languages",
+        "record_count": 249,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/silver/organization=tensorflow/dataset=languages/year=2026/month=07/day=26/languages.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:31:43.663285",
+        "organization": "tensorflow",
+        "endpoint": "silver_contributors",
+        "record_count": 2820,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/silver/organization=tensorflow/dataset=contributors/year=2026/month=07/day=26/contributors.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:32:27.283535",
+        "organization": "tensorflow",
+        "endpoint": "silver_commits",
+        "record_count": 7355,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/silver/organization=tensorflow/dataset=commits/year=2026/month=07/day=26/commits.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:32:58.773902",
+        "organization": "tensorflow",
+        "endpoint": "silver_issues",
+        "record_count": 3126,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/silver/organization=tensorflow/dataset=issues/year=2026/month=07/day=26/issues.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:33:47.600545",
+        "organization": "tensorflow",
+        "endpoint": "silver_pull_requests",
+        "record_count": 1581,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/silver/organization=tensorflow/dataset=pull_requests/year=2026/month=07/day=26/pull_requests.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:33:52.347608",
+        "organization": "tensorflow",
+        "endpoint": "gold_repository_metrics",
+        "record_count": 45,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=repository_metrics/year=2026/month=07/day=22/repository_metrics.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:33:52.902570",
+        "organization": "tensorflow",
+        "endpoint": "gold_repository_metrics",
+        "record_count": 45,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=repository_metrics/year=2026/month=07/day=22/repository_metrics.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:33:53.431977",
+        "organization": "tensorflow",
+        "endpoint": "gold_repository_metrics",
+        "record_count": 45,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=repository_metrics/year=2026/month=07/day=22/repository_metrics.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:33:55.053590",
+        "organization": "tensorflow",
+        "endpoint": "gold_language_metrics",
+        "record_count": 42,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=language_metrics/year=2026/month=07/day=22/language_metrics.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:33:55.592590",
+        "organization": "tensorflow",
+        "endpoint": "gold_language_metrics",
+        "record_count": 42,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=language_metrics/year=2026/month=07/day=22/language_metrics.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:33:56.162974",
+        "organization": "tensorflow",
+        "endpoint": "gold_language_metrics",
+        "record_count": 37,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=language_metrics/year=2026/month=07/day=22/language_metrics.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:33:57.999121",
+        "organization": "tensorflow",
+        "endpoint": "gold_contributor_metrics",
+        "record_count": 54,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=contributor_metrics/year=2026/month=07/day=22/contributor_metrics.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:33:58.567254",
+        "organization": "tensorflow",
+        "endpoint": "gold_contributor_metrics",
+        "record_count": 54,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=contributor_metrics/year=2026/month=07/day=22/contributor_metrics.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:33:59.141158",
+        "organization": "tensorflow",
+        "endpoint": "gold_contributor_metrics",
+        "record_count": 45,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=contributor_metrics/year=2026/month=07/day=22/contributor_metrics.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:34:07.855458",
+        "organization": "tensorflow",
+        "endpoint": "gold_repository_activity",
+        "record_count": 55,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=repository_activity/year=2026/month=07/day=22/repository_activity.parquet"
+    },
+    {
+        "run_time": "2026-07-26T12:34:10.715205",
+        "organization": "tensorflow",
+        "endpoint": "gold_organization_summary",
+        "record_count": 1,
+        "status": "SUCCESS",
+        "file_path": "s3://developer-analytics-data/gold/organization=tensorflow/dataset=organization_summary/year=2026/month=07/day=22/organization_summary.parquet"
     }
 ]

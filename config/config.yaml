@@ -15,7 +15,7 @@ github:
 
   per_page: 100
 
-  max_repositories: 45
+  max_repositories: 54
 
   request_timeout: 30
 
