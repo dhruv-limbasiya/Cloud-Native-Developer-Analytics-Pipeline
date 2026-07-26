@@ -33,6 +33,7 @@ jobs:
       - name: Copy Lambda Source
         run: |
           cp lambda/lambda_handler.py build/
+          cp -r src build/
 
       - name: Create Deployment Package
         run: |
