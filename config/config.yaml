@@ -33,4 +33,4 @@ postgres:
 
   username: postgres
 
-  password: your_password  # Set via POSTGRES_PASSWORD env variable
+  password: ""

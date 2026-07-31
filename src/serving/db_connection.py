@@ -1,5 +1,7 @@
 import os
 
+from urllib.parse import quote_plus
+
 from sqlalchemy import create_engine
 
 from src.core.config_loader import ConfigLoader
@@ -27,13 +29,19 @@ class DBConnection:
 
     def get_engine(self):
 
+        print("Host:", self.host)
+        print("Port:", self.port)
+        print("Database:", self.database)
+        print("Username:", self.username)
+        print("Password:", repr(self.password))
+
         connection_string = (
             f"postgresql+psycopg2://"
-            f"{self.username}:{self.password}"
+            f"{self.username}:{quote_plus(self.password)}"
             f"@{self.host}:{self.port}/"
             f"{self.database}"
         )
 
-        engine = create_engine(connection_string)
+        print(connection_string)
 
-        return engine
+        return create_engine(connection_string)

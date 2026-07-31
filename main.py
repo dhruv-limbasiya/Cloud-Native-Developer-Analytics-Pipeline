@@ -1,3 +1,8 @@
+from dotenv import load_dotenv
+
+# Load .env before anything uses environment variables
+load_dotenv()
+
 from src.core.config_loader import ConfigLoader
 from src.core.logger import Logger
 
