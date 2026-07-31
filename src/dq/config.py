@@ -10,9 +10,9 @@ DQ_CONFIG = {
         "duplicate_column": "repository_id",
 
         "numeric_columns": [
-            "stars",
-            "forks",
-            "watchers"
+            "star_count",
+            "fork_count",
+            "watcher_count"
         ]
     },
 

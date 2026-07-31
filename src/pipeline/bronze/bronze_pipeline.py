@@ -1,3 +1,4 @@
+from src.core.logger import Logger
 from src.extract.github_client import GitHubClient
 from src.extract.extractor_factory import ExtractorFactory
 
@@ -10,6 +11,8 @@ from src.pipeline.bronze.repository_pipeline import RepositoryPipeline
 class BronzePipeline:
 
     def __init__(self):
+
+        self.logger = Logger.get_logger()
 
         self.client = GitHubClient()
 
@@ -26,24 +29,22 @@ class BronzePipeline:
             extractors=self.extractors
         )
 
-        self.extractors = ExtractorFactory.get_extractors(self.client)
-
     def run(self, organization, organization_endpoints, repository_endpoints):
 
         for endpoint in organization_endpoints:
 
-            print(f"\nProcessing {endpoint}")
+            self.logger.info(f"Processing {endpoint}")
             
             if endpoint != "repositories":
 
-                print(f"Skipping {endpoint} (Repository-level endpoint)")
+                self.logger.info(f"Skipping {endpoint} (Repository-level endpoint)")
                 continue
 
             extractor = self.extractors.get(endpoint)
 
             if extractor is None:
 
-                print(f"No extractor found for '{endpoint}'")
+                self.logger.warning(f"No extractor found for '{endpoint}'")
                 continue
 
             try:
@@ -63,7 +64,7 @@ class BronzePipeline:
                     data=data
                 )
 
-                print(f"Saved -> {file_path}")
+                self.logger.info(f"Saved -> {file_path}")
                 
                 # Save Metadata
                 self.metadata.save(
@@ -83,7 +84,7 @@ class BronzePipeline:
 
             except Exception as e:
 
-                print(f"Failed to process {endpoint}: {e}")
+                self.logger.error(f"Failed to process {endpoint}: {e}")
 
                 self.metadata.save(
                     organization=organization,

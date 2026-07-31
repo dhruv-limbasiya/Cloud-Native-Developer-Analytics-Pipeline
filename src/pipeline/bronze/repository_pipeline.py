@@ -1,3 +1,6 @@
+from src.core.logger import Logger
+
+
 class RepositoryPipeline:
 
     def __init__(
@@ -7,6 +10,8 @@ class RepositoryPipeline:
         metadata,
         extractors
     ):
+
+        self.logger = Logger.get_logger()
 
         self.client = client
         self.writer = writer
@@ -20,7 +25,7 @@ class RepositoryPipeline:
         endpoints
     ):
 
-        print("\nStarting Repository Pipeline")
+        self.logger.info("Starting Repository Pipeline")
         max_repositories = self.client.config["github"]["max_repositories"]
 
         # Development mode
@@ -28,7 +33,7 @@ class RepositoryPipeline:
 
             repo_name = repository["name"]
 
-            print(f"\nRepository : {repo_name}")
+            self.logger.info(f"Repository : {repo_name}")
 
             for endpoint in endpoints:
 
@@ -36,13 +41,13 @@ class RepositoryPipeline:
 
                 if extractor is None:
 
-                    print(f"{endpoint} extractor not implemented")
+                    self.logger.warning(f"{endpoint} extractor not implemented")
 
                     continue
 
                 try:
 
-                    print(f"Fetching {endpoint}")
+                    self.logger.info(f"Fetching {endpoint}")
 
                     data = extractor.extract(
                         organization,
@@ -56,7 +61,7 @@ class RepositoryPipeline:
                         data=data
                     )
 
-                    print(f"Saved -> {file_path}")
+                    self.logger.info(f"Saved -> {file_path}")
 
                     self.metadata.save(
                         organization=organization,
@@ -68,7 +73,7 @@ class RepositoryPipeline:
 
                 except Exception as e:
 
-                    print(f"{endpoint} failed : {e}")
+                    self.logger.error(f"{endpoint} failed : {e}")
 
                     self.metadata.save(
                         organization=organization,

@@ -1,5 +1,6 @@
 import io
 import json
+import os
 
 import boto3
 
@@ -12,7 +13,10 @@ class S3Client:
 
     def __init__(self):
 
-        self.bucket_name = "developer-analytics-data"
+        self.bucket_name = os.getenv(
+            "S3_BUCKET_NAME",
+            "developer-analytics-data"
+        )
         self.client = boto3.client("s3")
     
     # JSON

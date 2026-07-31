@@ -45,7 +45,7 @@ class GitHubClient:
                     url,
                     headers=self.headers,
                     params=params,
-                    timeout=30
+                    timeout=self.config["github"]["request_timeout"]
                 )
 
                 remaining = response.headers.get(
@@ -103,12 +103,13 @@ class GitHubClient:
 
             self.logger.info(f"Fetching Page {page}")
 
+            request_params = dict(params or {})
+            request_params["per_page"] = per_page
+            request_params["page"] = page
+
             data = self.get(
                 endpoint,
-                params={
-                    "per_page": per_page,
-                    "page": page
-                }
+                params=request_params
             )
 
             if len(data) == 0:

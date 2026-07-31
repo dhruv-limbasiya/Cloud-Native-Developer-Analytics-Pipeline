@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from src.core.logger import Logger
 
 from src.storage.parquet_reader import ParquetReader
@@ -31,17 +33,22 @@ class GoldPipeline:
 
         self.logger.info("Starting Gold Pipeline")
 
-        self.build_repository_metrics(organization)
-        self.build_language_metrics(organization)
-        self.build_contributor_metrics(organization)
-        self.build_repository_activity(organization)
-        self.build_organization_summary(organization)
+        today = datetime.now()
+        year_value = str(today.year)
+        month_value = f"{today.month:02d}"
+        day_value = f"{today.day:02d}"
+
+        self.build_repository_metrics(organization, year_value, month_value, day_value)
+        self.build_language_metrics(organization, year_value, month_value, day_value)
+        self.build_contributor_metrics(organization, year_value, month_value, day_value)
+        self.build_repository_activity(organization, year_value, month_value, day_value)
+        self.build_organization_summary(organization, year_value, month_value, day_value)
 
         self.logger.info("Gold Pipeline Completed")
     
     # Repository Metrics
 
-    def build_repository_metrics(self, organization):
+    def build_repository_metrics(self, organization, year_value, month_value, day_value):
 
         silver_prefix = (
             f"silver/"
@@ -73,12 +80,6 @@ class GoldPipeline:
                 dataframe
             )
 
-            # Temporary values
-            # Later these will be parsed automatically
-            year_value = "2026"
-            month_value = "07"
-            day_value = "22"
-
             output_path = self.writer.save(
                 organization=organization,
                 dataset="repository_metrics",
@@ -98,7 +99,7 @@ class GoldPipeline:
                 
     # Language Metrics
 
-    def build_language_metrics(self, organization):
+    def build_language_metrics(self, organization, year_value, month_value, day_value):
 
         silver_prefix = (
             f"silver/"
@@ -130,11 +131,6 @@ class GoldPipeline:
                 dataframe
             )
 
-            # Temporary values
-            year_value = "2026"
-            month_value = "07"
-            day_value = "22"
-
             output_path = self.writer.save(
                 organization=organization,
                 dataset="language_metrics",
@@ -154,7 +150,7 @@ class GoldPipeline:
     
     # Contributor Metrics
 
-    def build_contributor_metrics(self, organization):
+    def build_contributor_metrics(self, organization, year_value, month_value, day_value):
 
         silver_prefix = (
             f"silver/"
@@ -186,11 +182,6 @@ class GoldPipeline:
                 dataframe
             )
 
-            # Temporary values
-            year_value = "2026"
-            month_value = "07"
-            day_value = "22"
-
             output_path = self.writer.save(
                 organization=organization,
                 dataset="contributor_metrics",
@@ -210,7 +201,7 @@ class GoldPipeline:
                 
     # Repository Activity
 
-    def build_repository_activity(self, organization):
+    def build_repository_activity(self, organization, year_value, month_value, day_value):
 
         commits_prefix = (
             f"silver/"
@@ -268,10 +259,6 @@ class GoldPipeline:
             pr_df
         )
 
-        year_value = "2026"
-        month_value = "07"
-        day_value = "22"
-
         output_path = self.writer.save(
             organization=organization,
             dataset="repository_activity",
@@ -290,7 +277,7 @@ class GoldPipeline:
         )
                 
     # Organization Summary
-    def build_organization_summary(self, organization):
+    def build_organization_summary(self, organization, year_value, month_value, day_value):
 
         repository_metrics_prefix = (
             f"gold/"
@@ -362,10 +349,6 @@ class GoldPipeline:
             activity_df=activity_df,
         )
 
-        year_value = "2026"
-        month_value = "07"
-        day_value = "22"
-
         output_path = self.writer.save(
             organization=organization,
             dataset="organization_summary",
@@ -381,4 +364,4 @@ class GoldPipeline:
             record_count=len(organization_summary),
             file_path=output_path,
             status="SUCCESS",
-    )
+        )

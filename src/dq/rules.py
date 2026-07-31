@@ -42,25 +42,10 @@ class DataQualityRules:
     @staticmethod
     def check_duplicates(dataframe, column):
 
-        duplicate_rows = dataframe[
-            dataframe.duplicated(subset=[column], keep=False)
-        ]
-
-        print("\n================ DUPLICATE DEBUG ================")
-        print("Checking column:", column)
-        print("Rows:", len(dataframe))
-        print("Duplicate count:", duplicate_rows.shape[0])
-
-        if not duplicate_rows.empty:
-            print(duplicate_rows)
-
-        print("=================================================\n")
-
         return int(
             dataframe.duplicated(subset=[column]).sum()
         )
 
-    @staticmethod
     @staticmethod
     def check_negative_values(
         dataframe,

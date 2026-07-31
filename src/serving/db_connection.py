@@ -1,3 +1,5 @@
+import os
+
 from sqlalchemy import create_engine
 
 from src.core.config_loader import ConfigLoader
@@ -18,7 +20,10 @@ class DBConnection:
         self.port = postgres["port"]
         self.database = postgres["database"]
         self.username = postgres["username"]
-        self.password = postgres["password"]
+        self.password = os.getenv(
+            "POSTGRES_PASSWORD",
+            postgres.get("password", "")
+        )
 
     def get_engine(self):
 
