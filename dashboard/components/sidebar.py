@@ -27,9 +27,13 @@ def render_sidebar(repo_df, lang_df):
         st.markdown(
             """
             <div class="sidebar-logo">
-                <div class="logo-icon">🐙</div>
+                <div class="logo-icon-badge">
+                    <svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+                    </svg>
+                </div>
                 <div class="logo-title">Cloud-Native<br>Developer Analytics</div>
-                <div class="logo-subtitle">GitHub Analytics Platform</div>
+                <div class="logo-subtitle">Enterprise Telemetry Platform</div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -42,7 +46,7 @@ def render_sidebar(repo_df, lang_df):
         selected_page = st.radio(
             "Go to",
             [
-                "🏠 Home",
+                "⚡ Home Overview",
                 "📦 Repository Analytics",
                 "👥 Contributor Analytics",
                 "💻 Language Analytics",
@@ -61,9 +65,11 @@ def render_sidebar(repo_df, lang_df):
         # Fixed Organization Display
         st.markdown(
             """
-            <div style="margin-bottom: 1rem;">
-                <label style="font-size: 0.8rem; font-weight: 500; color: #57606a;">ORGANIZATION</label>
-                <div style="font-weight: 600; font-size: 0.95rem; color: #24292f;">TensorFlow</div>
+            <div style="margin-bottom: 1rem; background: #f6f8fa; padding: 0.6rem 0.8rem; border-radius: 6px; border: 1px solid #d0d7de;">
+                <div style="font-size: 0.75rem; font-weight: 600; color: #57606a; text-transform: uppercase; letter-spacing: 0.5px;">ORGANIZATION</div>
+                <div style="font-weight: 700; font-size: 0.95rem; color: #0969da; display: flex; align-items: center; gap: 0.4rem;">
+                    <span>🏢</span> TensorFlow
+                </div>
             </div>
             """,
             unsafe_allow_html=True,
@@ -96,7 +102,7 @@ def render_sidebar(repo_df, lang_df):
         # Search
         search_query = st.text_input(
             "🔍 Search Repository",
-            placeholder="Type to search...",
+            placeholder="Type repository name...",
         )
 
     return {

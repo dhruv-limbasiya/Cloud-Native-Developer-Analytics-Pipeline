@@ -33,8 +33,8 @@ from dashboard.views import (
 # ----- Page Config -----
 
 st.set_page_config(
-    page_title="GitHub Developer Analytics",
-    page_icon="🐙",
+    page_title="Cloud-Native Developer Analytics",
+    page_icon="⚡",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -51,7 +51,7 @@ if css_path.exists():
 
 # ----- Load Data -----
 
-with st.spinner("Loading data from PostgreSQL..."):
+with st.spinner("Loading telemetry data from PostgreSQL..."):
 
     repo_df = get_repository_metrics()
     contributor_df = get_contributor_metrics()
@@ -69,7 +69,7 @@ filters = render_sidebar(repo_df, lang_df)
 
 page = filters["page"]
 
-if page == "🏠 Home":
+if page == "⚡ Home Overview":
     home.render(org_df, repo_df, lang_df, activity_df, contributor_df, filters)
 
 elif page == "📦 Repository Analytics":
