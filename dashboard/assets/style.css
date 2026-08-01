@@ -93,24 +93,6 @@ section[data-testid="stSidebar"] .block-container {
     border-bottom: 1px solid var(--color-border);
 }
 
-/* ---------- Insight Card ---------- */
-.insight-card {
-    background: var(--color-bg);
-    border: 1px solid var(--color-border);
-    border-left: 4px solid var(--color-accent);
-    border-radius: var(--radius);
-    padding: 1rem 1.25rem;
-    margin-bottom: 0.75rem;
-    box-shadow: var(--shadow-sm);
-    font-size: 0.9rem;
-    color: var(--color-text);
-    line-height: 1.5;
-}
-
-.insight-card .insight-icon {
-    margin-right: 0.5rem;
-}
-
 /* ---------- Pipeline Diagram ---------- */
 .pipeline-container {
     background: var(--color-bg);
@@ -196,34 +178,6 @@ section[data-testid="stSidebar"] .block-container {
     margin-bottom: 1.5rem;
 }
 
-/* ---------- Health Badges ---------- */
-.badge-good {
-    background: #dafbe1;
-    color: var(--color-success);
-    padding: 0.2rem 0.6rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.badge-warning {
-    background: #fff8c5;
-    color: var(--color-warning);
-    padding: 0.2rem 0.6rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
-.badge-danger {
-    background: #ffebe9;
-    color: var(--color-danger);
-    padding: 0.2rem 0.6rem;
-    border-radius: 12px;
-    font-size: 0.75rem;
-    font-weight: 600;
-}
-
 /* ---------- Leaderboard ---------- */
 .leaderboard-rank {
     display: inline-flex;
@@ -234,21 +188,6 @@ section[data-testid="stSidebar"] .block-container {
     border-radius: 50%;
     font-weight: 700;
     font-size: 0.8rem;
-}
-
-.rank-gold {
-    background: #ffd33d;
-    color: #24292f;
-}
-
-.rank-silver {
-    background: #d0d7de;
-    color: #24292f;
-}
-
-.rank-bronze {
-    background: #dba981;
-    color: #24292f;
 }
 
 /* ---------- Plotly Chart Container ---------- */
@@ -273,7 +212,21 @@ h1, h2, h3, h4, h5, h6 {
     color: var(--color-text) !important;
 }
 
-/* Hide Streamlit branding */
-#MainMenu {visibility: hidden;}
-footer {visibility: hidden;}
-header {visibility: hidden;}
+/* Hide Streamlit default hamburger menu & footer while keeping sidebar toggle button visible */
+#MainMenu { visibility: hidden; }
+footer { visibility: hidden; }
+
+header {
+    background: transparent !important;
+}
+
+[data-testid="stHeader"] {
+    background: transparent !important;
+}
+
+[data-testid="stSidebarCollapseButton"],
+[data-testid="stCollapsedControl"] {
+    visibility: visible !important;
+    display: flex !important;
+    z-index: 999999 !important;
+}
