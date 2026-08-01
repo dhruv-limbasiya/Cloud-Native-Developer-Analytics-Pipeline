@@ -257,4 +257,3 @@ Access the application in your browser at `http://localhost:8501`.
 
 **Author**: Dhruv Limbasiya  
 **Repository**: [Cloud-Native Developer Analytics Platform](https://github.com/dhruv-limbasiya/Cloud-Native-Developer-Analytics-Pipeline)  
-Distributed under the MIT License.
