@@ -8,10 +8,10 @@
 
 /* ---------- Root Variables ---------- */
 :root {
-    --color-bg: #ffffff;
+    --color-bg: #83a0bd ;
     --color-bg-subtle: #f6f8fa;
     --color-border: #d0d7de;
-    --color-text: #24292f;
+    --color-text: #010101;
     --color-text-secondary: #57606a;
     --color-accent: #0969da;
     --color-accent-hover: #0550ae;
@@ -44,6 +44,7 @@ section[data-testid="stSidebar"] {
 
 section[data-testid="stSidebar"] .block-container {
     padding-top: 1.5rem;
+    color: var(--color-text) !important;
 }
 
 /* ---------- KPI Card ---------- */
