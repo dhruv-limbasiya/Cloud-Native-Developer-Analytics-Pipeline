@@ -230,14 +230,3 @@ streamlit run dashboard/app.py
 The dashboard will open automatically at `http://localhost:8501`.
 
 ---
-
-## 💼 Resume Summary
-
-### Portfolio Project Bullet Points for Resume
-
-> **Cloud-Native Developer Analytics Platform**  
-> *Architected an end-to-end cloud data pipeline and BI platform ingesting GitHub API telemetry into an AWS S3 Medallion Data Lake (Bronze → Silver → Gold).*
-> - **ETL & Data Lake**: Developed automated serverless extraction handlers in Python & AWS Lambda, producing partitioned Parquet datasets for Bronze, Silver, and Gold layers.
-> - **Database & Serving Layer**: Modeled relational analytical schemas in PostgreSQL using SQLAlchemy to serve aggregations on repositories, languages, contributors, and activity velocity.
-> - **BI Dashboard**: Built a responsive, multi-page Streamlit dashboard using Plotly and custom CSS, serving 6 executive analytics views with cached query performance (`@st.cache_data`).
-> - **Quality & DevOps**: Integrated unit tests with Pytest, automated data quality validation rules, and built CI/CD workflows using GitHub Actions.
