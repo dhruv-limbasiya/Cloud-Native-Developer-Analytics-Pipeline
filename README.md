@@ -1,110 +1,132 @@
 <p align="center">
-  <h1 align="center">☁️ Cloud-Native Developer Analytics Pipeline</h1>
+  <h1 align="center">⚡ Cloud-Native Developer Analytics Platform</h1>
   <p align="center">
-    A production-grade data engineering platform that ingests GitHub organization data via the REST API, stores it in an Amazon S3 data lake following the <strong>Medallion Architecture</strong> (Bronze → Silver → Gold), enforces data quality validation, generates analytical datasets, loads them into PostgreSQL, and visualizes business insights with Power BI.
+    An end-to-end data engineering platform that extracts GitHub organization telemetry via REST API, processes it through an S3 Data Lake (Bronze → Silver → Gold), validates data quality, serves analytical models in PostgreSQL, and powers an interactive 6-page Streamlit analytics dashboard.
   </p>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
+  <img src="https://img.shields.io/badge/Python-3.9%2B-3776AB?style=for-the-badge&logo=python&logoColor=white" alt="Python">
   <img src="https://img.shields.io/badge/AWS_Lambda-FF9900?style=for-the-badge&logo=awslambda&logoColor=white" alt="AWS Lambda">
   <img src="https://img.shields.io/badge/Amazon_S3-569A31?style=for-the-badge&logo=amazons3&logoColor=white" alt="Amazon S3">
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL">
-  <img src="https://img.shields.io/badge/Power_BI-F2C811?style=for-the-badge&logo=powerbi&logoColor=black" alt="Power BI">
-  <img src="https://img.shields.io/badge/Pandas-150458?style=for-the-badge&logo=pandas&logoColor=white" alt="Pandas">
+  <img src="https://img.shields.io/badge/Streamlit-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white" alt="Streamlit">
+  <img src="https://img.shields.io/badge/Plotly-3F4F75?style=for-the-badge&logo=plotly&logoColor=white" alt="Plotly">
   <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions">
 </p>
 
 ---
 
-## 📋 Table of Contents
+## 📌 Table of Contents
 
-- [Business Problem](#-business-problem)
+- [Overview](#-overview)
 - [Architecture](#-architecture)
-- [Tech Stack](#-tech-stack)
+- [Medallion Data Lake Design](#-medallion-data-lake-design)
+- [Interactive Streamlit Dashboard](#-interactive-streamlit-dashboard)
+- [Technology Stack](#-technology-stack)
 - [Project Structure](#-project-structure)
-- [Pipeline Workflow](#-pipeline-workflow)
-- [Getting Started](#-getting-started)
-- [Configuration](#-configuration)
-- [Data Quality Framework](#-data-quality-framework)
+- [Data Quality & Metadata](#-data-quality--metadata)
 - [CI/CD & Deployment](#-cicd--deployment)
-- [Analytics & Dashboards](#-analytics--dashboards)
-- [Key Features](#-key-features)
-- [Future Enhancements](#-future-enhancements)
-- [Author](#-author)
+- [How to Run](#-how-to-run)
+- [Resume Summary](#-resume-summary)
 
 ---
 
-## 🎯 Business Problem
+## 🚀 Overview
 
-Software organizations manage hundreds of repositories and thousands of contributors across GitHub. Engineering leaders often struggle to answer critical questions:
+Engineering leaders managing large GitHub organizations (such as `tensorflow`) often lack centralized visibility into repository growth, code volume distribution, contributor engagement, and issue backlog velocity.
 
-| Question | Insight Area |
-|---|---|
-| Which repositories are the most active? | Repository Health |
-| Who are the top contributors? | Developer Productivity |
-| What languages dominate the organization? | Technology Landscape |
-| How many open issues and PRs exist? | Backlog Management |
-| What is the commit velocity over time? | Engineering Velocity |
-| Is the organization growing or stagnating? | Organizational Health |
+This project delivers an automated, cloud-native data engineering pipeline that continuously extracts, transforms, and serves developer telemetry.
 
-This project builds an **automated analytics pipeline** that collects GitHub data and transforms it into business-ready datasets for reporting and visualization — eliminating manual data gathering and enabling data-driven engineering decisions.
+### Key Value Delivered
+- **Automated Telemetry Extraction**: Collects repository metadata, language breakdowns, commit histories, contributor metrics, issue counts, and pull requests via GitHub REST API.
+- **Medallion Data Lake**: Implements Bronze (raw JSON/Parquet), Silver (cleaned/standardized), and Gold (aggregated business metrics) partitions in Apache Parquet format.
+- **Serving Layer**: Automatically loads Gold analytics datasets into PostgreSQL via SQLAlchemy.
+- **Executive BI Dashboard**: A 6-page interactive Streamlit dashboard providing executive insights, top repository rankings, language distributions, contributor leaderboards, and activity metrics.
 
 ---
 
-## 🏗 Architecture
+## 🏗️ Architecture
 
 ```
-                         ┌─────────────────────┐
-                         │   GitHub REST API    │
-                         └──────────┬──────────┘
-                                    │
-                                    ▼
-                         ┌─────────────────────┐
-                         │     AWS Lambda       │
-                         │   (Data Extraction)  │
-                         └──────────┬──────────┘
-                                    │
-                    ┌───────────────┼───────────────┐
-                    ▼               ▼               ▼
-            ┌──────────┐    ┌──────────┐    ┌──────────┐
-            │  Bronze   │    │  Silver  │    │   Gold   │
-            │  (Raw     │───▶│  (Clean  │───▶│ (Business│
-            │   JSON)   │    │ Parquet) │    │ Metrics) │
-            └──────────┘    └──────────┘    └──────────┘
-                                │                 │
-                                ▼                 ▼
-                    ┌──────────────────┐  ┌──────────────┐
-                    │   Data Quality   │  │  PostgreSQL  │
-                    │   Validation     │  │  Warehouse   │
-                    └──────────────────┘  └──────┬───────┘
-                                                 │
-                                                 ▼
-                                        ┌──────────────┐
-                                        │   Power BI   │
-                                        │  Dashboard   │
-                                        └──────────────┘
+                                  CLOUD DATA PIPELINE ARCHITECTURE
+                                  
+  ┌───────────────┐        ┌──────────────┐        ┌────────────────┐        ┌────────────────┐
+  │  GitHub API   │ ────>  │  AWS Lambda  │ ────>  │ S3 Data Lake   │ ────>  │ Silver Layer   │
+  │  (Telemetry)  │        │ (Extraction) │        │ (Bronze Layer) │        │ (Standardized) │
+  └───────────────┘        └──────────────┘        └────────────────┘        └────────────────┘
+                                                                                      │
+  ┌───────────────┐        ┌──────────────┐        ┌────────────────┐                 │
+  │   Streamlit   │ <────  │  PostgreSQL  │ <────  │   Gold Layer   │ <────────────────┘
+  │  (Dashboard)  │        │ (Database)   │        │ (Aggregated)   │
+  └───────────────┘        └──────────────┘        └────────────────┘
 ```
 
-> **Medallion Architecture** — Data flows through three progressively refined layers: **Bronze** (immutable raw ingestion) → **Silver** (cleaned & validated) → **Gold** (business-ready analytics).
+### Data Pipeline Sequence
+1. **Extraction (Bronze)**: AWS Lambda fetches raw telemetry from GitHub API endpoints and writes partitioned Parquet files to `data/bronze/`.
+2. **Standardization (Silver)**: PyArrow/Pandas cleans, casts data types, handles null values, and writes standardized schema files to `data/silver/`.
+3. **Aggregation (Gold)**: Summarizes repository metrics, language bytes, contributor stats, and activity totals in `data/gold/`.
+4. **Serving Layer**: `PostgresLoader` loads Gold datasets into relational PostgreSQL tables.
+5. **Analytics Dashboard**: Streamlit queries PostgreSQL using SQLAlchemy with `@st.cache_data` caching to power 6 analytical views.
 
 ---
 
-## 🛠 Tech Stack
+## 🥇 Medallion Data Lake Design
 
-| Category | Technology | Purpose |
-|---|---|---|
-| **Language** | Python 3.12 | Core pipeline logic |
-| **Cloud Compute** | AWS Lambda | Serverless data extraction |
-| **Cloud Storage** | Amazon S3 | Data lake (Bronze / Silver / Gold) |
-| **API** | GitHub REST API | Primary data source |
-| **Data Processing** | Pandas, PyArrow | Transformation & Parquet I/O |
-| **Data Validation** | Custom DQ Framework | Schema, null, duplicate, and range checks |
-| **Database** | PostgreSQL + SQLAlchemy | Analytical data warehouse |
-| **Visualization** | Power BI | Interactive dashboards |
-| **CI/CD** | GitHub Actions | Automated Lambda deployment |
-| **Configuration** | YAML + dotenv | Externalized settings |
-| **Cloud SDK** | Boto3 | S3 and Lambda integration |
+| Partition Layer | Format | Path | Purpose |
+|---|---|---|---|
+| **Bronze Layer** | Parquet | `data/bronze/organization={org}/dataset={name}/` | Raw ingestion preserves original API responses |
+| **Silver Layer** | Parquet | `data/silver/organization={org}/dataset={name}/` | Cleaned schema, formatted datetimes, null handling |
+| **Gold Layer** | Parquet | `data/gold/organization={org}/dataset={name}/` | Aggregated business metrics ready for BI |
+| **PostgreSQL** | Relational | `developer_analytics` database | Queryable serving layer for web dashboards & SQL analytics |
+
+---
+
+## 📊 Interactive Streamlit Dashboard
+
+The platform includes a modern 6-page BI dashboard built with Streamlit, Plotly, and custom GitHub-inspired CSS styling (`#f6f8fa` clean white theme, rounded cards, subtle shadows).
+
+### 1. 🏠 Executive Overview
+Includes a pipeline flow architecture visual, 7 high-level KPI cards, top 10 repos by stars/forks, language distribution donut chart, top contributors, and factual activity breakdown.
+
+![Home Page Dashboard](docs/images/dashboard_home.png)
+
+### 2. 📦 Repository Analytics
+Features top repo bar charts, Watchers vs. Stars scatter plot (sized by forks, colored by language), repository size analysis, and a searchable statistics data table.
+
+![Repository Analytics Page](docs/images/dashboard_repository.png)
+
+### 3. 👥 Contributor Analytics
+Displays top contributing repositories, contributor count breakdown, contributions distribution histogram, and a ranked contributor leaderboard.
+
+![Contributor Analytics Page](docs/images/dashboard_contributor.png)
+
+### 4. 💻 Language Analytics
+Highlights language distribution donut chart, code volume by language bar chart, and language statistics table with percentage volume badges.
+
+![Language Analytics Page](docs/images/dashboard_language.png)
+
+### 5. 📊 Activity Analytics
+Provides side-by-side Commit, Issue, and Pull Request bar charts per repository along with an activity table.
+
+![Activity Analytics Page](docs/images/dashboard_activity.png)
+
+### 6. 🏢 Organization Summary
+Presents high-level organization KPI cards and an executive summary table detailing total repositories, stars, forks, contributors, commits, issues, and pull requests.
+
+![Organization Summary Page](docs/images/dashboard_organization.png)
+
+---
+
+## 🛠️ Technology Stack
+
+* **Language**: Python 3.9+
+* **Cloud & Serverless**: AWS Lambda, Amazon S3
+* **Data Processing**: Pandas, PyArrow, NumPy
+* **Storage & Serving**: Apache Parquet, PostgreSQL, SQLAlchemy, `psycopg2-binary`
+* **Frontend BI Dashboard**: Streamlit, Plotly Express
+* **Configuration & Environment**: PyYAML, `python-dotenv`
+* **Testing & CI/CD**: Pytest, GitHub Actions
 
 ---
 
@@ -112,454 +134,110 @@ This project builds an **automated analytics pipeline** that collects GitHub dat
 
 ```
 Cloud-Native-Developer-Analytics-Pipeline/
-│
 ├── config/
-│   └── config.yaml                  # Pipeline configuration (org, endpoints, limits)
-│
-├── data/
-│   ├── bronze/                      # Raw JSON from GitHub API
-│   ├── silver/                      # Cleaned Parquet datasets
-│   ├── gold/                        # Business-ready analytics Parquet
-│   └── metadata/                    # Ingestion metadata (run tracking)
-│
+│   └── config.yaml             # Pipeline & PostgreSQL configuration
+├── dashboard/
+│   ├── app.py                  # Streamlit main entry point
+│   ├── database.py             # SQLAlchemy database queries & caching
+│   ├── assets/
+│   │   └── style.css           # GitHub-inspired clean theme CSS
+│   ├── components/
+│   │   ├── sidebar.py          # Logo branding, page routing & sidebar filters
+│   │   ├── kpi_cards.py        # Reusable metric card renderer
+│   │   └── footer.py           # Dashboard footer component
+│   └── views/
+│       ├── home.py             # Page 1: Executive Overview
+│       ├── repository.py       # Page 2: Repository Analytics
+│       ├── contributor.py      # Page 3: Contributor Analytics
+│       ├── language.py         # Page 4: Language Analytics
+│       ├── activity.py         # Page 5: Activity Analytics
+│       └── organization.py     # Page 6: Organization Summary
+├── data/                       # Local S3 Data Lake emulation
+│   ├── bronze/                 # Raw ingestion layer
+│   ├── silver/                 # Standardized layer
+│   └── gold/                   # Aggregated metrics layer
 ├── docs/
-│   ├── api/                         # GitHub API endpoint documentation
-│   ├── architecture/                # System design document
-│   ├── deployment/                  # Deployment guides
-│   ├── diagrams/                    # Architecture diagrams
-│   └── screenshots/                 # Dashboard screenshots
-│
+│   └── images/                 # Dashboard screenshots for README
 ├── lambda/
-│   ├── lambda_handler.py            # AWS Lambda entry point (Bronze pipeline)
-│   └── requirements.txt             # Lambda-specific dependencies
-│
-├── logs/
-│   ├── pipeline.log                 # Application log
-│   └── dq/                          # Data quality reports (JSON)
-│
+│   └── lambda_function.py      # Serverless extraction handler
 ├── src/
-│   ├── core/                        # Shared infrastructure
-│   │   ├── config_loader.py         #   YAML configuration loader
-│   │   ├── constants.py             #   Global constants (paths, URLs)
-│   │   ├── env_loader.py            #   Environment variable loader
-│   │   ├── exceptions.py            #   Custom exception classes
-│   │   └── logger.py                #   Centralized logging
-│   │
-│   ├── extract/                     # GitHub API data extraction
-│   │   ├── github_client.py         #   HTTP client with retry & pagination
-│   │   ├── extractor_factory.py     #   Factory pattern for extractors
-│   │   ├── repositories.py          #   Repository extractor
-│   │   ├── commits.py               #   Commit extractor
-│   │   ├── contributors.py          #   Contributor extractor
-│   │   ├── issues.py                #   Issue extractor
-│   │   ├── pull_requests.py         #   Pull request extractor
-│   │   └── languages.py             #   Language extractor
-│   │
-│   ├── transform/                   # Bronze → Silver transformations
-│   │   ├── base_transformer.py      #   Abstract base with shared logic
-│   │   ├── transformer_factory.py   #   Factory pattern for transformers
-│   │   ├── repositories_transformer.py
-│   │   ├── commits_transformer.py
-│   │   ├── contributors_transformer.py
-│   │   ├── issues_transformer.py
-│   │   ├── pull_requests_transformer.py
-│   │   └── languages_transformer.py
-│   │
-│   ├── dq/                          # Data quality framework
-│   │   ├── config.py                #   Per-dataset validation rules
-│   │   ├── rules.py                 #   Validation rule implementations
-│   │   ├── validator.py             #   Orchestrates validation checks
-│   │   ├── gold_validator.py        #   Gold-layer specific validation
-│   │   └── report.py                #   DQ report generation & persistence
-│   │
-│   ├── storage/                     # Read/write abstraction layer
-│   │   ├── s3_client.py             #   S3 JSON & Parquet I/O
-│   │   ├── bronze_reader.py         #   Read Bronze JSON files
-│   │   ├── bronze_writer.py         #   Write Bronze JSON files
-│   │   ├── silver_writer.py         #   Write Silver Parquet files
-│   │   ├── gold_writer.py           #   Write Gold Parquet files
-│   │   ├── parquet_reader.py        #   Generic Parquet reader
-│   │   ├── metadata_writer.py       #   Run metadata tracking
-│   │   ├── local_storage.py         #   Local filesystem abstraction
-│   │   └── file_manager.py          #   File utilities
-│   │
-│   ├── pipeline/                    # Pipeline orchestration
-│   │   ├── bronze/
-│   │   │   ├── bronze_pipeline.py   #   Full Bronze ingestion pipeline
-│   │   │   └── repository_pipeline.py #  Per-repository extraction
-│   │   ├── silver/
-│   │   │   └── silver_pipeline.py   #   Bronze → Silver with DQ checks
-│   │   └── gold/
-│   │       ├── gold_pipeline.py     #   Silver → Gold analytics builder
-│   │       ├── repository_metrics.py
-│   │       ├── language_metrics.py
-│   │       ├── contributor_metrics.py
-│   │       ├── repository_activity.py
-│   │       └── organization_summary.py
-│   │
-│   └── serving/                     # Data serving layer
-│       ├── db_connection.py         #   PostgreSQL connection via SQLAlchemy
-│       ├── postgres_loader.py       #   Gold → PostgreSQL loader
-│       └── postgres_writer.py       #   DataFrame-to-table writer
-│
-├── .github/
-│   └── workflows/
-│       └── deploy.yml               # CI/CD: Build, test, deploy Lambda
-│
-├── main.py                          # Local pipeline entry point
-├── requirements.txt                 # Python dependencies
-├── .env.example                     # Environment variable template
-├── .gitignore                       # Git exclusions
-└── README.md
+│   ├── core/                   # Config loader, logger, constants
+│   ├── dq/                     # Data quality rules & validators
+│   ├── extract/                # GitHub API client & handlers
+│   ├── pipeline/               # Bronze, Silver, Gold pipeline orchestrators
+│   ├── serving/                # PostgreSQL writer & loader modules
+│   └── storage/                # Parquet & S3 readers/writers
+├── test/                       # Pytest unit & integration test suite
+├── .env.example                # Environment variable template
+├── main.py                     # CLI pipeline orchestrator
+└── requirements.txt            # Unified project dependencies
 ```
 
 ---
 
-## ⚙ Pipeline Workflow
+## ✅ Data Quality & Metadata
 
-### Step 1 — Data Extraction (Bronze Layer)
-
-The **Bronze Pipeline** runs on AWS Lambda and extracts raw data from the GitHub REST API.
-
-**Data Sources:**
-
-| Endpoint | Data Collected |
-|---|---|
-| `/orgs/{org}/repos` | Repositories (name, stars, forks, language, dates) |
-| `/repos/{owner}/{repo}/languages` | Language byte counts per repository |
-| `/repos/{owner}/{repo}/contributors` | Contributors and contribution counts |
-| `/repos/{owner}/{repo}/commits` | Commit SHA, author, date, message |
-| `/repos/{owner}/{repo}/issues` | Issue number, state, labels, dates |
-| `/repos/{owner}/{repo}/pulls` | PR number, state, created/merged dates |
-
-**Features:** Automatic pagination · Configurable retry logic (3 attempts) · Rate-limit awareness · Date-partitioned storage
-
-**Storage Format:**
-```
-bronze/
-  organization=tensorflow/
-    endpoint=repositories/
-      year=2026/
-        month=07/
-          day=29/
-            repositories.json
-```
+The pipeline enforces data quality at every stage:
+- **Null & Type Checking**: Enforces schema contracts during Silver transformations.
+- **Data Quality Validation (`dq/`)**: Runs Gold layer validation checks ensuring metric consistency before database loading.
+- **Metadata Logging (`MetadataWriter`)**: Writes execution metadata (row counts, file paths, status, execution timestamps) for full pipeline lineage auditing.
 
 ---
 
-### Step 2 — Data Transformation (Silver Layer)
+## ⚙️ How to Run
 
-The **Silver Pipeline** reads Bronze JSON, applies per-dataset transformers, and outputs clean Parquet files.
+### 1. Prerequisites
+- Python 3.9+
+- PostgreSQL database running locally or on AWS RDS
+- GitHub Personal Access Token (optional for public repos, recommended for rate limits)
 
-**Transformations Applied:**
-- Schema normalization and column renaming
-- Nested JSON flattening
-- Datetime parsing (UTC)
-- Null value handling
-- Column selection (drop unused fields)
-- Type casting
-
-**Output Datasets:** `repositories.parquet` · `contributors.parquet` · `commits.parquet` · `languages.parquet` · `issues.parquet` · `pull_requests.parquet`
-
----
-
-### Step 3 — Data Quality Validation
-
-Every Silver dataset is validated **before** it proceeds to the Gold layer. If any check fails, the pipeline halts immediately.
-
-| Check | Description |
-|---|---|
-| **Empty Dataset** | Ensures dataset contains at least one row |
-| **Required Columns** | Verifies all expected columns are present |
-| **Null Values** | Counts nulls in required columns |
-| **Duplicate Detection** | Checks for duplicate records on a key column |
-| **Negative Values** | Validates numeric columns contain no negatives |
-
-DQ reports are persisted as JSON files under `logs/dq/` for auditability.
-
----
-
-### Step 4 — Business Analytics (Gold Layer)
-
-The **Gold Pipeline** aggregates Silver datasets into five business-ready analytical tables:
-
-| Gold Dataset | Source Data | Key Metrics |
-|---|---|---|
-| `repository_metrics` | Repositories | Stars, forks, watchers, repo age |
-| `language_metrics` | Languages | Byte count, language distribution |
-| `contributor_metrics` | Contributors | Total contributions per user |
-| `repository_activity` | Commits + Issues + PRs | Commit count, issue count, PR count per repo |
-| `organization_summary` | All Gold datasets | Aggregate org-level KPIs |
-
----
-
-### Step 5 — Data Serving (PostgreSQL)
-
-Gold Parquet files are automatically loaded into PostgreSQL using SQLAlchemy, making them queryable via standard SQL and connectable to any BI tool.
-
----
-
-### Step 6 — Visualization (Power BI)
-
-Power BI connects directly to PostgreSQL to provide interactive dashboards:
-
-- **Repository Overview** — Stars, forks, and watchers by repository
-- **Repository Activity** — Commits, issues, and PRs over time
-- **Language Distribution** — Technology landscape across the organization
-- **Top Contributors** — Most active developers
-- **Organization Summary** — High-level health metrics
-
----
-
-## 🚀 Getting Started
-
-### Prerequisites
-
-- Python 3.12+
-- PostgreSQL 14+
-- AWS Account (for S3 and Lambda)
-- GitHub Personal Access Token ([create one here](https://github.com/settings/tokens))
-- Power BI Desktop (optional, for dashboards)
-
-### 1. Clone the Repository
-
+### 2. Environment Setup
 ```bash
+# Clone the repository
 git clone https://github.com/dhruv-limbasiya/Cloud-Native-Developer-Analytics-Pipeline.git
 cd Cloud-Native-Developer-Analytics-Pipeline
-```
 
-### 2. Create a Virtual Environment
-
-```bash
+# Create and activate virtual environment
 python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
 
-# Windows
-venv\Scripts\activate
-
-# macOS / Linux
-source venv/bin/activate
-```
-
-### 3. Install Dependencies
-
-```bash
+# Install dependencies
 pip install -r requirements.txt
 ```
 
-### 4. Configure Environment Variables
-
-Create a `.env` file in the project root:
-
-```env
-GITHUB_TOKEN=ghp_your_personal_access_token_here
-AWS_REGION=us-east-1
+### 3. Configure Environment Variables
+Copy `.env.example` to `.env` and set your credentials:
+```ini
+GITHUB_TOKEN=your_personal_access_token
+POSTGRES_PASSWORD=your_postgres_password
+POSTGRES_HOST=localhost
+POSTGRES_PORT=5432
+POSTGRES_DB=developer_analytics
+POSTGRES_USER=postgres
 ```
 
-> ⚠️ **Never commit your `.env` file.** It is already included in `.gitignore`.
-
-### 5. Update Configuration
-
-Edit `config/config.yaml` to set the target GitHub organization and pipeline parameters:
-
-```yaml
-github:
-  organizations:
-    - tensorflow          # Target organization
-
-  organization_endpoints:
-    - repositories
-
-  repository_endpoints:
-    - languages
-    - commits
-    - issues
-    - pull_requests
-    - contributors
-
-  per_page: 100           # Records per API page
-  max_repositories: 54    # Limit repositories to process
-  request_timeout: 30     # API timeout in seconds
-  retry_count: 3          # Retry attempts on failure
-  max_pages: 2            # Max pages to paginate
-
-postgres:
-  host: localhost
-  port: 5432
-  database: developer_analytics
-  username: postgres
-  password: your_password
-```
-
-### 6. Set Up PostgreSQL
-
-```sql
-CREATE DATABASE developer_analytics;
-```
-
-### 7. Run the Pipeline
-
+### 4. Run the Data Pipeline
 ```bash
+# Runs Bronze -> Silver -> Gold -> PostgreSQL loading
 python main.py
 ```
 
-This executes: **Silver Pipeline** → **Gold Pipeline** → **PostgreSQL Loading**
-
-> **Note:** The Bronze pipeline runs separately on AWS Lambda. For local testing, ensure Bronze data exists in `data/bronze/`.
-
----
-
-## 🔧 Configuration
-
-The pipeline is fully **configuration-driven** — no code changes are needed to analyze a different organization.
-
-| Parameter | Description | Default |
-|---|---|---|
-| `organizations` | GitHub organization to analyze | `tensorflow` |
-| `max_repositories` | Maximum number of repos to process | `54` |
-| `per_page` | Records per API page | `100` |
-| `max_pages` | Maximum pages to paginate | `2` |
-| `request_timeout` | API request timeout (seconds) | `30` |
-| `retry_count` | Retry attempts on API failure | `3` |
-
-To switch organizations, simply update `config/config.yaml`:
-
-```yaml
-github:
-  organizations:
-    - google        # or: apache, kubernetes, microsoft, netflix
+### 5. Launch the Streamlit Dashboard
+```bash
+# Launch the 6-page interactive dashboard
+streamlit run dashboard/app.py
 ```
+The dashboard will open automatically at `http://localhost:8501`.
 
 ---
 
-## 🛡 Data Quality Framework
+## 💼 Resume Summary
 
-The custom-built DQ framework validates every dataset at the Silver layer before promotion to Gold.
+### Portfolio Project Bullet Points for Resume
 
-```
-┌─────────────────────────────────────────┐
-│          DataQualityValidator           │
-│                                         │
-│  ┌─────────┐  ┌────────┐  ┌─────────┐  │
-│  │ Rules   │  │ Config │  │ Report  │  │
-│  │ Engine  │  │ (YAML) │  │ Writer  │  │
-│  └─────────┘  └────────┘  └─────────┘  │
-│                                         │
-│  Checks: empty · columns · nulls ·     │
-│           duplicates · negatives        │
-└─────────────────────────────────────────┘
-```
-
-**Behavior:** If validation **fails**, the pipeline raises a `ValueError` and stops execution — preventing bad data from reaching the Gold layer or PostgreSQL.
-
-**Reports:** Each validation run generates a JSON report stored at:
-```
-logs/dq/organization={org}/dataset={name}/year={Y}/month={M}/day={D}/report.json
-```
-
----
-
-## 🔄 CI/CD & Deployment
-
-The project uses **GitHub Actions** for automated CI/CD on every push to `main`:
-
-```yaml
-# .github/workflows/deploy.yml
-Trigger:     Push to main / master
-Runner:      ubuntu-latest
-Python:      3.12
-
-Steps:
-  1. Checkout repository
-  2. Setup Python 3.12
-  3. Validate syntax (py_compile)
-  4. Install Lambda dependencies → build/
-  5. Package source code → deployment.zip
-  6. Upload artifact
-  7. Configure AWS credentials (from GitHub Secrets)
-  8. Deploy to AWS Lambda
-```
-
-**Required GitHub Secrets:**
-
-| Secret | Description |
-|---|---|
-| `AWS_ACCESS_KEY_ID` | AWS IAM access key |
-| `AWS_SECRET_ACCESS_KEY` | AWS IAM secret key |
-| `AWS_REGION` | AWS region (e.g., `us-east-1`) |
-| `LAMBDA_FUNCTION_NAME` | Lambda function name |
-
----
-
-## 📊 Analytics & Dashboards
-
-### Generated Insights
-
-| Metric | Description |
-|---|---|
-| **Top Repositories** | Ranked by stars, forks, and watchers |
-| **Repository Activity** | Commits, issues, and PRs per repository |
-| **Commit Statistics** | Commit frequency and author analysis |
-| **Pull Request Activity** | PR volume, state distribution |
-| **Issue Statistics** | Open vs. closed issues, backlog size |
-| **Top Contributors** | Most active developers by contributions |
-| **Language Distribution** | Byte count and percentage by language |
-| **Organization Summary** | Aggregate KPIs across all repositories |
-
----
-
-## ✨ Key Features
-
-| Feature | Description |
-|---|---|
-| **Medallion Architecture** | Three-layer data lake (Bronze → Silver → Gold) |
-| **Serverless Extraction** | AWS Lambda for scheduled, event-driven ingestion |
-| **Configuration-Driven** | Change organization or limits via YAML — zero code changes |
-| **Data Quality Gates** | Automated validation prevents bad data propagation |
-| **Factory Pattern** | Pluggable extractors and transformers for each endpoint |
-| **Automatic Pagination** | Handles multi-page API responses transparently |
-| **Retry with Backoff** | Resilient HTTP client with configurable retries |
-| **Rate-Limit Awareness** | Logs remaining API quota from response headers |
-| **Metadata Tracking** | Every pipeline run logs status, record count, and file path |
-| **Partitioned Storage** | Data organized by `organization/endpoint/year/month/day` |
-| **CI/CD Pipeline** | GitHub Actions builds, validates, and deploys Lambda automatically |
-| **DQ Reporting** | JSON audit trail for every validation run |
-
----
-
-## 🔮 Future Enhancements
-
-- [ ] Apache Airflow orchestration
-- [ ] AWS Glue Data Catalog integration
-- [ ] Amazon Athena for serverless SQL
-- [ ] Apache Spark for large-scale processing
-- [ ] Apache Iceberg table format
-- [ ] Great Expectations for advanced data validation
-- [ ] Infrastructure as Code with Terraform
-- [ ] Multi-organization support
-- [ ] GitHub GraphQL API migration
-- [ ] Real-time streaming with Kafka
-
----
-
-## 📄 Documentation
-
-| Document | Description |
-|---|---|
-| [System Design](docs/architecture/system_design.md) | Detailed architecture and design decisions |
-| [GitHub API Endpoints](docs/api/github_endpoints.md) | API endpoint reference and data schema |
-
----
-
-## 👤 Author
-
-**Dhruv Limbasiya**
-
-MCA Student · Aspiring Data Engineer
-
-[![GitHub](https://img.shields.io/badge/GitHub-dhruv--limbasiya-181717?style=flat&logo=github)](https://github.com/dhruv-limbasiya)
-
----
-
-<p align="center">
-  <sub>Built with ❤️ as a production-inspired Data Engineering portfolio project.</sub>
-</p>
+> **Cloud-Native Developer Analytics Platform**  
+> *Architected an end-to-end cloud data pipeline and BI platform ingesting GitHub API telemetry into an AWS S3 Medallion Data Lake (Bronze → Silver → Gold).*
+> - **ETL & Data Lake**: Developed automated serverless extraction handlers in Python & AWS Lambda, producing partitioned Parquet datasets for Bronze, Silver, and Gold layers.
+> - **Database & Serving Layer**: Modeled relational analytical schemas in PostgreSQL using SQLAlchemy to serve aggregations on repositories, languages, contributors, and activity velocity.
+> - **BI Dashboard**: Built a responsive, multi-page Streamlit dashboard using Plotly and custom CSS, serving 6 executive analytics views with cached query performance (`@st.cache_data`).
+> - **Quality & DevOps**: Integrated unit tests with Pytest, automated data quality validation rules, and built CI/CD workflows using GitHub Actions.
