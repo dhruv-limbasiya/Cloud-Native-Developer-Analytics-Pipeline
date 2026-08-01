@@ -1,7 +1,7 @@
 <p align="center">
   <h1 align="center">⚡ Cloud-Native Developer Analytics Platform</h1>
   <p align="center">
-    An end-to-end data engineering platform that extracts GitHub organization telemetry via REST API, processes it through an S3 Data Lake (Bronze → Silver → Gold), validates data quality, serves analytical models in PostgreSQL, and powers an interactive 6-page Streamlit analytics dashboard.
+    <strong>An end-to-end Data Engineering pipeline & BI dashboard powering organization-wide GitHub developer telemetry insights.</strong>
   </p>
 </p>
 
@@ -20,99 +20,116 @@
 ## 📌 Table of Contents
 
 - [Overview](#-overview)
-- [Architecture](#-architecture)
+- [System Architecture](#-system-architecture)
 - [Medallion Data Lake Design](#-medallion-data-lake-design)
 - [Interactive Streamlit Dashboard](#-interactive-streamlit-dashboard)
 - [Technology Stack](#-technology-stack)
-- [Project Structure](#-project-structure)
-- [Data Quality & Metadata](#-data-quality--metadata)
-- [CI/CD & Deployment](#-cicd--deployment)
+- [Project Directory Structure](#-project-directory-structure)
+- [Data Quality & Lineage](#-data-quality--lineage)
 - [How to Run](#-how-to-run)
-- [Resume Summary](#-resume-summary)
+- [License & Contact](#-license--contact)
 
 ---
 
 ## 🚀 Overview
 
-Engineering leaders managing large GitHub organizations (such as `tensorflow`) often lack centralized visibility into repository growth, code volume distribution, contributor engagement, and issue backlog velocity.
+Engineering leaders managing large GitHub organizations (such as `tensorflow`) often struggle to gain centralized visibility into repository growth, code volume distribution, contributor engagement, and issue backlog velocity.
 
-This project delivers an automated, cloud-native data engineering pipeline that continuously extracts, transforms, and serves developer telemetry.
+This platform provides an automated, serverless data pipeline and an interactive executive BI dashboard that extracts, standardizes, models, and visualizes GitHub telemetry.
 
-### Key Value Delivered
-- **Automated Telemetry Extraction**: Collects repository metadata, language breakdowns, commit histories, contributor metrics, issue counts, and pull requests via GitHub REST API.
-- **Medallion Data Lake**: Implements Bronze (raw JSON/Parquet), Silver (cleaned/standardized), and Gold (aggregated business metrics) partitions in Apache Parquet format.
-- **Serving Layer**: Automatically loads Gold analytics datasets into PostgreSQL via SQLAlchemy.
-- **Executive BI Dashboard**: A 6-page interactive Streamlit dashboard providing executive insights, top repository rankings, language distributions, contributor leaderboards, and activity metrics.
+### Key Capabilities
+* **Serverless Ingestion**: Extracts repository metadata, language bytes, commit histories, contributor metrics, open issues, and pull requests via GitHub REST API.
+* **Medallion Data Lake Architecture**: Organizes storage into Bronze (raw ingestion), Silver (cleaned/standardized schemas), and Gold (aggregated business metrics) partitions in Apache Parquet format.
+* **Relational Serving Layer**: Automates loading of Gold analytical models into PostgreSQL via SQLAlchemy.
+* **Executive BI Dashboard**: A 6-page interactive Streamlit dashboard featuring Plotly visualizations, custom GitHub-inspired styling, and cached database queries (`@st.cache_data`).
 
 ---
 
-## 🏗️ Architecture
+## 🏗️ System Architecture
 
 ```
-                                  CLOUD DATA PIPELINE ARCHITECTURE
-                                  
-  ┌───────────────┐        ┌──────────────┐        ┌────────────────┐        ┌────────────────┐
-  │  GitHub API   │ ────>  │  AWS Lambda  │ ────>  │ S3 Data Lake   │ ────>  │ Silver Layer   │
-  │  (Telemetry)  │        │ (Extraction) │        │ (Bronze Layer) │        │ (Standardized) │
-  └───────────────┘        └──────────────┘        └────────────────┘        └────────────────┘
-                                                                                      │
-  ┌───────────────┐        ┌──────────────┐        ┌────────────────┐                 │
-  │   Streamlit   │ <────  │  PostgreSQL  │ <────  │   Gold Layer   │ <────────────────┘
-  │  (Dashboard)  │        │ (Database)   │        │ (Aggregated)   │
-  └───────────────┘        └──────────────┘        └────────────────┘
+                                 DATA PIPELINE ARCHITECTURE
+
+  ┌─────────────────┐        ┌─────────────────┐        ┌─────────────────┐
+  │   GitHub API    │ ────>  │   AWS Lambda    │ ────>  │ S3 Bronze Layer │
+  │ (REST Endpoints)│        │  (Ingestion)    │        │  (Raw Ingest)   │
+  └─────────────────┘        └─────────────────┘        └────────┬────────┘
+                                                                 │
+  ┌─────────────────┐        ┌─────────────────┐                 │
+  │ Streamlit App   │        │ PostgreSQL DB   │                 ▼
+  │ (6 Page Views)  │        │ (Serving Layer) │        ┌─────────────────┐
+  └────────▲────────┘        └────────▲────────┘        │ S3 Silver Layer │
+           │                          │                 │ (Standardized)  │
+           └──────────────────────────┴───────────────  └────────┬────────┘
+                                    SQLAlchemy                    │
+                                (Cached Queries)                 ▼
+                                                        ┌─────────────────┐
+                                                        │  S3 Gold Layer  │
+                                                        │  (Aggregated)   │
+                                                        └─────────────────┘
 ```
 
-### Data Pipeline Sequence
-1. **Extraction (Bronze)**: AWS Lambda fetches raw telemetry from GitHub API endpoints and writes partitioned Parquet files to `data/bronze/`.
-2. **Standardization (Silver)**: PyArrow/Pandas cleans, casts data types, handles null values, and writes standardized schema files to `data/silver/`.
-3. **Aggregation (Gold)**: Summarizes repository metrics, language bytes, contributor stats, and activity totals in `data/gold/`.
-4. **Serving Layer**: `PostgresLoader` loads Gold datasets into relational PostgreSQL tables.
-5. **Analytics Dashboard**: Streamlit queries PostgreSQL using SQLAlchemy with `@st.cache_data` caching to power 6 analytical views.
+### Data Pipeline Stages
+1. **Extraction (Bronze)**: AWS Lambda fetches raw telemetry from GitHub API endpoints and writes partitioned Parquet files.
+2. **Standardization (Silver)**: Cleans data types, standardizes timestamps, handles missing fields, and enforces schema contracts.
+3. **Aggregation (Gold)**: Aggregates repository stats, language code volumes, contributor rankings, and activity metrics into Gold Parquet partitions.
+4. **Database Ingestion**: `PostgresLoader` loads Gold analytics datasets into PostgreSQL.
+5. **Dashboard Presentation**: Streamlit queries PostgreSQL using SQLAlchemy to render 6 analytical views.
 
 ---
 
 ## 🥇 Medallion Data Lake Design
 
-| Partition Layer | Format | Path | Purpose |
+| Storage Layer | Data Format | Partition Path | Purpose |
 |---|---|---|---|
-| **Bronze Layer** | Parquet | `data/bronze/organization={org}/dataset={name}/` | Raw ingestion preserves original API responses |
-| **Silver Layer** | Parquet | `data/silver/organization={org}/dataset={name}/` | Cleaned schema, formatted datetimes, null handling |
-| **Gold Layer** | Parquet | `data/gold/organization={org}/dataset={name}/` | Aggregated business metrics ready for BI |
-| **PostgreSQL** | Relational | `developer_analytics` database | Queryable serving layer for web dashboards & SQL analytics |
+| **Bronze Layer** | Apache Parquet | `data/bronze/organization={org}/dataset={name}/` | Raw API response preservation |
+| **Silver Layer** | Apache Parquet | `data/silver/organization={org}/dataset={name}/` | Schema enforcement, datetime casting, null handling |
+| **Gold Layer** | Apache Parquet | `data/gold/organization={org}/dataset={name}/` | Business aggregation models ready for analytical serving |
+| **PostgreSQL** | Relational SQL | `developer_analytics` database | Queryable serving layer powering the web application |
 
 ---
 
 ## 📊 Interactive Streamlit Dashboard
 
-The platform includes a modern 6-page BI dashboard built with Streamlit, Plotly, and custom GitHub-inspired CSS styling (`#f6f8fa` clean white theme, rounded cards, subtle shadows).
+The platform includes a modern 6-page BI dashboard built with Streamlit, Plotly, and custom GitHub-inspired CSS (`#f6f8fa` clean light theme, rounded cards, soft box-shadows).
 
 ### 1. 🏠 Executive Overview
-Includes a pipeline flow architecture visual, 7 high-level KPI cards, top 10 repos by stars/forks, language distribution donut chart, top contributors, and factual activity breakdown.
+Presents a pipeline architecture diagram, 7 high-level KPI cards (Repositories, Stars, Forks, Contributors, Commits, Issues, PRs), top repositories by stars/forks, language breakdown, top contributors, and activity breakdown.
 
-![Home Page Dashboard](docs/images/dashboard_home.png)
+![Executive Overview Dashboard](docs/images/dashboard_home.png)
+
+---
 
 ### 2. 📦 Repository Analytics
-Features top repo bar charts, Watchers vs. Stars scatter plot (sized by forks, colored by language), repository size analysis, and a searchable statistics data table.
+Features top repository bar charts, Watchers vs. Stars scatter plot (sized by forks, colored by language), repository size analysis, and a searchable repository statistics table.
 
 ![Repository Analytics Page](docs/images/dashboard_repository.png)
+
+---
 
 ### 3. 👥 Contributor Analytics
 Displays top contributing repositories, contributor count breakdown, contributions distribution histogram, and a ranked contributor leaderboard.
 
 ![Contributor Analytics Page](docs/images/dashboard_contributor.png)
 
+---
+
 ### 4. 💻 Language Analytics
-Highlights language distribution donut chart, code volume by language bar chart, and language statistics table with percentage volume badges.
+Highlights language distribution donut chart, code volume by language bar chart, and language statistics table with percentage code volume badges.
 
 ![Language Analytics Page](docs/images/dashboard_language.png)
 
+---
+
 ### 5. 📊 Activity Analytics
-Provides side-by-side Commit, Issue, and Pull Request bar charts per repository along with an activity table.
+Provides side-by-side Commit, Open Issue, and Pull Request bar charts per repository along with a factual activity table.
 
 ![Activity Analytics Page](docs/images/dashboard_activity.png)
 
+---
+
 ### 6. 🏢 Organization Summary
-Presents high-level organization KPI cards and an executive summary table detailing total repositories, stars, forks, contributors, commits, issues, and pull requests.
+Presents organization-wide summary KPI cards and a platform overview table detailing repositories, stars, forks, contributors, commits, issues, and pull requests.
 
 ![Organization Summary Page](docs/images/dashboard_organization.png)
 
@@ -120,17 +137,19 @@ Presents high-level organization KPI cards and an executive summary table detail
 
 ## 🛠️ Technology Stack
 
-* **Language**: Python 3.9+
-* **Cloud & Serverless**: AWS Lambda, Amazon S3
-* **Data Processing**: Pandas, PyArrow, NumPy
-* **Storage & Serving**: Apache Parquet, PostgreSQL, SQLAlchemy, `psycopg2-binary`
-* **Frontend BI Dashboard**: Streamlit, Plotly Express
-* **Configuration & Environment**: PyYAML, `python-dotenv`
-* **Testing & CI/CD**: Pytest, GitHub Actions
+| Category | Technology |
+|---|---|
+| **Core Language** | Python 3.9+ |
+| **Cloud Infrastructure** | AWS Lambda, Amazon S3 |
+| **Data Engineering** | Pandas, PyArrow, NumPy |
+| **Database & Serving** | PostgreSQL, SQLAlchemy, `psycopg2-binary` |
+| **BI & Analytics** | Streamlit, Plotly Express |
+| **Configuration** | PyYAML, `python-dotenv` |
+| **Testing & CI/CD** | Pytest, GitHub Actions |
 
 ---
 
-## 📁 Project Structure
+## 📁 Project Directory Structure
 
 ```
 Cloud-Native-Developer-Analytics-Pipeline/
@@ -157,7 +176,9 @@ Cloud-Native-Developer-Analytics-Pipeline/
 │   ├── silver/                 # Standardized layer
 │   └── gold/                   # Aggregated metrics layer
 ├── docs/
-│   └── images/                 # Dashboard screenshots for README
+│   ├── deployment/             # Deployment guides (Streamlit Cloud, Docker)
+│   ├── diagrams/               # Architecture sequence flow docs
+│   └── images/                 # High-resolution dashboard screenshots
 ├── lambda/
 │   └── lambda_function.py      # Serverless extraction handler
 ├── src/
@@ -175,12 +196,13 @@ Cloud-Native-Developer-Analytics-Pipeline/
 
 ---
 
-## ✅ Data Quality & Metadata
+## ✅ Data Quality & Lineage
 
-The pipeline enforces data quality at every stage:
-- **Null & Type Checking**: Enforces schema contracts during Silver transformations.
-- **Data Quality Validation (`dq/`)**: Runs Gold layer validation checks ensuring metric consistency before database loading.
-- **Metadata Logging (`MetadataWriter`)**: Writes execution metadata (row counts, file paths, status, execution timestamps) for full pipeline lineage auditing.
+The platform enforces data validation and audit logging across all layers:
+- **Schema Contracts**: Standardizes field names and datetimes during Silver transformations.
+- **Data Quality Validator (`dq/`)**: Executes Gold layer validation rules ensuring metric integrity before PostgreSQL loading.
+- **Lineage Metadata (`MetadataWriter`)**: Audits execution timestamps, output file paths, row counts, and status for operational observability.
+- **Automated Test Suite**: Verified via `pytest` with 100% pass rate across configuration, extraction, quality rules, and transformation modules.
 
 ---
 
@@ -189,9 +211,9 @@ The pipeline enforces data quality at every stage:
 ### 1. Prerequisites
 - Python 3.9+
 - PostgreSQL database running locally or on AWS RDS
-- GitHub Personal Access Token (optional for public repos, recommended for rate limits)
+- GitHub Personal Access Token
 
-### 2. Environment Setup
+### 2. Installation & Setup
 ```bash
 # Clone the repository
 git clone https://github.com/dhruv-limbasiya/Cloud-Native-Developer-Analytics-Pipeline.git
@@ -205,8 +227,8 @@ source venv/bin/activate  # On Windows: venv\Scripts\activate
 pip install -r requirements.txt
 ```
 
-### 3. Configure Environment Variables
-Copy `.env.example` to `.env` and set your credentials:
+### 3. Environment Variables
+Create a `.env` file in the root directory:
 ```ini
 GITHUB_TOKEN=your_personal_access_token
 POSTGRES_PASSWORD=your_postgres_password
@@ -216,17 +238,23 @@ POSTGRES_DB=developer_analytics
 POSTGRES_USER=postgres
 ```
 
-### 4. Run the Data Pipeline
+### 4. Run Pipeline Execution
 ```bash
-# Runs Bronze -> Silver -> Gold -> PostgreSQL loading
+# Executes Bronze -> Silver -> Gold -> PostgreSQL loading
 python main.py
 ```
 
-### 5. Launch the Streamlit Dashboard
+### 5. Launch Dashboard
 ```bash
-# Launch the 6-page interactive dashboard
+# Launch the interactive 6-page Streamlit dashboard
 streamlit run dashboard/app.py
 ```
-The dashboard will open automatically at `http://localhost:8501`.
+Access the application in your browser at `http://localhost:8501`.
 
 ---
+
+## 📜 License & Author
+
+**Author**: Dhruv Limbasiya  
+**Repository**: [Cloud-Native Developer Analytics Platform](https://github.com/dhruv-limbasiya/Cloud-Native-Developer-Analytics-Pipeline)  
+Distributed under the MIT License.
